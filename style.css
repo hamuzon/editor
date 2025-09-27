@@ -10,6 +10,7 @@
   --font-family:'Potta One', cursive;
 }
 
+/* ダークテーマ */
 body[data-theme="dark"] {
   --bg:#1E1E2F;
   --panel:#2B2B3Ccc;
@@ -18,6 +19,7 @@ body[data-theme="dark"] {
   --highlight:#A7C7FF;
 }
 
+/* ベース設定 */
 body {
   margin:0;
   font-family:var(--font-family);
@@ -40,11 +42,13 @@ header {
   gap:0.5rem;
   flex-wrap:wrap;
 }
+
 header .brand {
   font-size:1.5rem;
   color:var(--highlight);
   font-weight:700;
 }
+
 header .controls {
   margin-left:auto;
   display:flex;
@@ -52,6 +56,7 @@ header .controls {
   flex-wrap:wrap;
 }
 
+/* ボタン・入力系 */
 button, select, input[type="text"], input[type="color"] {
   border:none;
   border-radius:var(--radius);
@@ -64,10 +69,12 @@ button, select, input[type="text"], input[type="color"] {
   transition:0.2s;
   font-size:0.9rem;
 }
+
 button:hover, select:hover, input[type="text"]:hover, input[type="color"]:hover {
   opacity:0.85;
 }
 
+/* メインレイアウト */
 main {
   flex:1;
   display:flex;
@@ -78,6 +85,7 @@ main {
   overflow:hidden;
 }
 
+/* サイドバー */
 .sidebar {
   background:var(--panel);
   padding:14px;
@@ -88,6 +96,7 @@ main {
   flex:0 0 280px;
 }
 
+/* タブ */
 .tablist {
   display:flex;
   flex-direction:column;
@@ -117,6 +126,7 @@ main {
   cursor:pointer;
 }
 
+/* エディター */
 .editor-area {
   flex:1;
   display:flex;
@@ -169,11 +179,13 @@ textarea.code {
   tab-size:4;
 }
 
+/* ステータスなど */
 .status, .info {
   font-size:0.85rem;
   color:var(--accent);
 }
 
+/* ドラッグ＆ドロップ領域 */
 .file-drop {
   border:2px dashed var(--accent);
   padding:12px;
@@ -184,6 +196,7 @@ textarea.code {
   cursor:pointer;
 }
 
+/* モーダル共通 */
 .modal-center {
   position:fixed;
   top:50%;
@@ -202,19 +215,6 @@ textarea.code {
   overflow:auto;
 }
 
-footer {
-  text-align:center;
-  padding:1rem;
-  background:var(--panel);
-  border-top:1px solid var(--accent);
-  font-size:0.85rem;
-  border-radius:0 0 var(--radius) var(--radius);
-}
-footer a {
-  color:var(--highlight);
-  text-decoration:none;
-}
-
 /* 設定・機能説明モーダル */
 #settingPanel, #helpModal {
   position:fixed;
@@ -225,26 +225,51 @@ footer a {
   max-width:400px;
   min-width:250px;
   z-index:1000;
+  background:var(--panel);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  display:none;
+  padding:16px;
+  overflow:auto;
 }
 
-/* レスポンシブ対応 */
+/* フッター */
+footer {
+  text-align:center;
+  padding:1rem;
+  background:var(--panel);
+  border-top:1px solid var(--accent);
+  font-size:0.85rem;
+  border-radius:0 0 var(--radius) var(--radius);
+}
+
+footer a {
+  color:var(--highlight);
+  text-decoration:none;
+}
+
+/* =====================
+   📱 レスポンシブ対応
+===================== */
 @media(max-width:880px) {
   main {
     flex-direction:column;
   }
+
   .sidebar {
     width:100%;
     flex:0 0 auto;
   }
+
   .editor-wrap {
     flex-direction:column;
   }
+
   .linenums {
     display:none;
   }
-  #settingPanel, #helpModal {
-    top:40%;
-  }
+
+  /* header調整 */
   header {
     flex-direction:column;
     align-items:flex-start;
@@ -253,5 +278,45 @@ footer a {
     margin-left:0;
     width:100%;
     flex-wrap:wrap;
+  }
+
+  /* モーダル：スマホでも中央・全体見えるように */
+  #settingPanel,
+  #helpModal {
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:95%;
+    max-width:95%;
+    max-height:80%;
+    overflow-y:auto;
+    z-index:1000;
+    display:block;
+  }
+
+  .modal-center {
+    padding:1rem;
+    font-size:0.9rem;
+  }
+
+  /* モーダル開時、背景スクロール防止 */
+  body.modal-open {
+    overflow:hidden;
+  }
+}
+
+/* さらに小さい画面では全画面モード */
+@media(max-width:600px) {
+  #settingPanel,
+  #helpModal {
+    top:0;
+    left:0;
+    transform:none;
+    width:100%;
+    height:100%;
+    max-width:none;
+    max-height:none;
+    border-radius:0;
+    overflow-y:auto;
   }
 }
