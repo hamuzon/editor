@@ -1,0 +1,2 @@
+# editor
+# 📝 ファイルエディター / File Editor 
