@@ -1,156 +1,257 @@
-/* ===============================
-   基本設定
-================================*/
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Potta One', 'Segoe UI', sans-serif;
-  background-color: #1e1e1e;
-  color: #eee;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+:root {
+  --bg:#F0F8FF;
+  --panel:#FFFFFFcc;
+  --text:#1A1A1A;
+  --accent:#4EA0FF;
+  --highlight:#A7C7FF;
+  --mono:'Roboto Mono', monospace;
+  --radius:16px;
+  --shadow:0 8px 24px rgba(0,0,0,0.15);
+  --font-family:'Potta One', cursive;
 }
 
-/* ===============================
-   コンテナ
-================================*/
-.container {
-  width: 95%;
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 16px;
-  background: #252526;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+body[data-theme="dark"] {
+  --bg:#1E1E2F;
+  --panel:#2B2B3Ccc;
+  --text:#E0E7FF;
+  --accent:#4EA0FF;
+  --highlight:#A7C7FF;
 }
 
-/* ===============================
-   上部バー（ツールバー）
-================================*/
-.toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  background: #2d2d2d;
-  padding: 8px;
-  border-radius: 8px;
+body {
+  margin:0;
+  font-family:var(--font-family);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.8;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
-.toolbar button,
-.toolbar select,
-.toolbar input {
-  background: #3a3a3a;
-  border: none;
-  color: #eee;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
+header {
+  display:flex;
+  align-items:center;
+  padding:1rem;
+  background:var(--panel);
+  border-bottom:1px solid var(--accent);
+  border-radius:var(--radius) var(--radius) 0 0;
+  box-shadow:var(--shadow);
+  gap:0.5rem;
+  flex-wrap:wrap;
+}
+header .brand {
+  font-size:1.5rem;
+  color:var(--highlight);
+  font-weight:700;
+}
+header .controls {
+  margin-left:auto;
+  display:flex;
+  gap:0.5rem;
+  flex-wrap:wrap;
 }
 
-.toolbar button:hover,
-.toolbar select:hover {
-  background: #505050;
+button, select, input[type="text"], input[type="color"] {
+  border:none;
+  border-radius:var(--radius);
+  padding:0.5rem 0.8rem;
+  background:var(--accent);
+  color:#fff;
+  cursor:pointer;
+  font-weight:600;
+  backdrop-filter: blur(6px);
+  transition:0.2s;
+  font-size:0.9rem;
+}
+button:hover, select:hover, input[type="text"]:hover, input[type="color"]:hover {
+  opacity:0.85;
 }
 
-/* ===============================
-   ファイルドロップエリア
-================================*/
+main {
+  flex:1;
+  display:flex;
+  flex-direction:row;
+  gap:12px;
+  padding:12px;
+  min-height:0;
+  overflow:hidden;
+}
+
+.sidebar {
+  background:var(--panel);
+  padding:14px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(12px);
+  overflow:auto;
+  flex:0 0 280px;
+}
+
+.tablist {
+  display:flex;
+  flex-direction:column;
+  gap:0.35rem;
+  margin-bottom:1rem;
+}
+
+.tab {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0.5rem 0.6rem;
+  border-radius:var(--radius);
+  cursor:pointer;
+  backdrop-filter: blur(6px);
+}
+
+.tab.active {
+  background:var(--highlight);
+  color:#fff;
+}
+
+.tab .closeTab {
+  margin-left:5px;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.editor-area {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  min-height:0;
+  overflow:hidden;
+}
+
+.editor-wrap {
+  flex:1;
+  display:flex;
+  gap:8px;
+  min-height:0;
+  overflow:hidden;
+}
+
+.linenums {
+  width:50px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+  padding:.8rem;
+  border-radius:var(--radius) 0 0 var(--radius);
+  text-align:right;
+  font-family:var(--mono);
+  color:var(--accent);
+  overflow:auto;
+}
+
+.editor {
+  flex:1;
+  background:var(--panel);
+  padding:16px;
+  border-radius:var(--radius);
+  overflow:auto;
+  backdrop-filter: blur(10px);
+  min-height:0;
+}
+
+textarea.code {
+  width:100%;
+  height:100%;
+  min-height:100%;
+  border:none;
+  background:transparent;
+  font-family:var(--mono);
+  font-size:14px;
+  line-height:1.8;
+  resize:none;
+  outline:none;
+  tab-size:4;
+}
+
+.status, .info {
+  font-size:0.85rem;
+  color:var(--accent);
+}
+
 .file-drop {
-  border: 2px dashed #666;
-  border-radius: 10px;
-  padding: 24px;
-  text-align: center;
-  color: #ccc;
-  cursor: pointer;
-  transition: background 0.3s, border-color 0.3s;
+  border:2px dashed var(--accent);
+  padding:12px;
+  border-radius:var(--radius);
+  text-align:center;
+  color:var(--accent);
+  backdrop-filter: blur(6px);
+  cursor:pointer;
 }
 
-.file-drop:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: #aaa;
+.modal-center {
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:var(--panel);
+  padding:16px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  display:none;
+  z-index:999;
+  width:90%;
+  max-width:400px;
+  min-width:250px;
+  max-height:70%;
+  overflow:auto;
 }
 
-/* ===============================
-   エディター部分
-================================*/
-#editor {
-  width: 100%;
-  height: 60vh;
-  background: #1e1e1e;
-  color: #eee;
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 10px;
-  resize: none;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 14px;
-  line-height: 1.6;
-  box-sizing: border-box;
+footer {
+  text-align:center;
+  padding:1rem;
+  background:var(--panel);
+  border-top:1px solid var(--accent);
+  font-size:0.85rem;
+  border-radius:0 0 var(--radius) var(--radius);
+}
+footer a {
+  color:var(--highlight);
+  text-decoration:none;
 }
 
-/* ===============================
-   モーダル
-================================*/
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.6);
-  z-index: 10;
+/* 設定・機能説明モーダル */
+#settingPanel, #helpModal {
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90%;
+  max-width:400px;
+  min-width:250px;
+  z-index:1000;
 }
 
-.modal-content {
-  background: #2d2d2d;
-  color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-/* ===============================
-   スマホ対応
-================================*/
-@media (max-width: 768px) {
-  .container {
-    width: 98%;
-    padding: 12px;
+/* レスポンシブ対応 */
+@media(max-width:880px) {
+  main {
+    flex-direction:column;
   }
-  #editor {
-    height: 50vh;
-    font-size: 13px;
+  .sidebar {
+    width:100%;
+    flex:0 0 auto;
   }
-  .toolbar {
-    flex-direction: column;
-    align-items: stretch;
+  .editor-wrap {
+    flex-direction:column;
   }
-}
-
-/* ===============================
-   ライトテーマ（任意）
-================================*/
-.light-mode {
-  background-color: #fafafa;
-  color: #222;
-}
-.light-mode #editor {
-  background: #fff;
-  color: #111;
-}
-.light-mode .toolbar {
-  background: #ddd;
+  .linenums {
+    display:none;
+  }
+  #settingPanel, #helpModal {
+    top:40%;
+  }
+  header {
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  header .controls {
+    margin-left:0;
+    width:100%;
+    flex-wrap:wrap;
+  }
 }
