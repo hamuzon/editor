@@ -198,6 +198,13 @@ closeSettingBtn.onclick = () => togglePanel(settingPanel, false);
 helpBtn.onclick = () => togglePanel(helpModal, true);
 closeHelpBtn.onclick = () => togglePanel(helpModal, false);
 
+helpModal.addEventListener('click', e => {
+  if (e.target === helpModal) togglePanel(helpModal, false);
+});
+settingPanel.addEventListener('click', e => {
+  if (e.target === settingPanel) togglePanel(settingPanel, false);
+});
+
 if (toggleInfoBtn) {
   toggleInfoBtn.onclick = () => infoPanel.classList.toggle('open');
 }
@@ -215,12 +222,17 @@ dropArea.addEventListener('drop', async e => {
 dropArea.addEventListener('click', () => fileInput.click());
 
 function applyTheme() {
-  const root = document.documentElement;
-  root.style.setProperty('--bg', bgColor.value);
-  root.style.setProperty('--panel', `${panelColor.value}cc`);
-  root.style.setProperty('--accent', accentColor.value);
-  root.style.setProperty('--highlight', highlightColor.value);
-  root.style.setProperty('--text', textColor.value);
+  document.body.style.backgroundColor = bgColor.value;
+  document.body.style.color = textColor.value;
+  document.querySelectorAll('.sidebar,.editor,.modal-panel,header,footer').forEach(el => {
+    el.style.backgroundColor = panelColor.value;
+  });
+  document.querySelectorAll('.tab.active').forEach(el => {
+    el.style.backgroundColor = highlightColor.value;
+  });
+  document.querySelectorAll('button, select, input[type="text"], input[type="color"]').forEach(el => {
+    el.style.backgroundColor = accentColor.value;
+  });
 }
 
 bgColor.oninput = applyTheme;
@@ -286,7 +298,6 @@ document.addEventListener('keydown', e => {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('year').textContent = new Date().getFullYear();
   newTab();
-  applyTheme();
   codeEl.style.fontSize = `${fontsize.value}px`;
   codeEl.style.fontFamily = fontfamily.value;
 });
