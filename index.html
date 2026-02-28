@@ -16,14 +16,16 @@
 <header>
   <div class="brand">ファイルエディター / File Editor</div>
   <div class="controls">
-    <div class="control-group">
+    <div class="control-group" aria-label="ファイル操作">
+      <span class="group-title">ファイル</span>
       <button id="newBtn">新規</button>
       <button id="openBtn">開く</button>
       <input type="file" id="fileInput" style="display:none" multiple>
       <button id="saveBtn">保存</button>
       <button id="downloadBtn">ダウンロード</button>
     </div>
-    <div class="control-group grow">
+    <div class="control-group grow" aria-label="表示設定">
+      <span class="group-title">表示</span>
       <input type="text" id="filenameInput" placeholder="ファイル名" aria-label="ファイル名">
       <select id="fontsize" aria-label="フォントサイズ">
         <option value="12">12px</option>
@@ -39,7 +41,8 @@
         <option value="'Courier New', monospace">Courier New</option>
       </select>
     </div>
-    <div class="control-group">
+    <div class="control-group" aria-label="補助操作">
+      <span class="group-title">補助</span>
       <button id="themeToggle">ライト/ダーク</button>
       <button id="toggleInfoBtn" class="mobile-only">情報</button>
       <button id="settingBtn">設定</button>
@@ -55,6 +58,7 @@
     <hr>
     <div class="info" id="fileInfo">ファイルなし</div>
     <div class="status" id="status">未保存</div>
+    <div class="tips">💡 Ctrl/Cmd + S で保存</div>
     <div id="dropArea" class="file-drop">ここにファイルをドラッグ＆ドロップ</div>
   </aside>
 

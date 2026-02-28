@@ -76,6 +76,10 @@ function activateTab(id) {
   activeId = id;
   renderTabs();
   loadActive();
+  if (window.matchMedia('(max-width: 860px)').matches) {
+    infoPanel.classList.remove('open');
+    updateInfoToggleLabel();
+  }
 }
 
 function closeTab(id) {
@@ -205,8 +209,16 @@ settingPanel.addEventListener('click', e => {
   if (e.target === settingPanel) togglePanel(settingPanel, false);
 });
 
+function updateInfoToggleLabel() {
+  if (!toggleInfoBtn) return;
+  toggleInfoBtn.textContent = infoPanel.classList.contains('open') ? '情報を閉じる' : '情報';
+}
+
 if (toggleInfoBtn) {
-  toggleInfoBtn.onclick = () => infoPanel.classList.toggle('open');
+  toggleInfoBtn.onclick = () => {
+    infoPanel.classList.toggle('open');
+    updateInfoToggleLabel();
+  };
 }
 
 dropArea.addEventListener('dragover', e => e.preventDefault());
@@ -300,4 +312,5 @@ document.addEventListener('DOMContentLoaded', () => {
   newTab();
   codeEl.style.fontSize = `${fontsize.value}px`;
   codeEl.style.fontFamily = fontfamily.value;
+  updateInfoToggleLabel();
 });
