@@ -1,7 +1,10 @@
 # editor
-# 📝 ファイルエディター / File Editor 
+
+## 📝 ファイルエディター / File Editor
+
 バグ合ってもしりません自己責任でつかってね
-# アクセスlink
+
+## アクセスlink
 
 [editor.hamusata.f5.si](https://editor.hamusata.f5.si/)
 
