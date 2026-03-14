@@ -278,7 +278,6 @@ footer a {
     max-height:80%;
     overflow-y:auto;
     z-index:1000;
-    display:block;
   }
   .modal-center {
     padding:1rem;
