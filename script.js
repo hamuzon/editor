@@ -265,7 +265,24 @@ document.addEventListener('DOMContentLoaded', () => {
   newTab();
   applyTheme();
 
-  // フッターの年度更新
+  // フッターの年度更新とドメイン別リンク切替
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  const footerLink = document.getElementById('footerLink');
+  if (footerLink) {
+    const footerMap = {
+      'hamuzon.github.io': { handle: '@hamuzon', url: 'https://hamuzon.github.io' },
+      'hamusata.f5.si': { handle: '@hamusata', url: 'https://hamusata.f5.si' },
+      'hamuzon-jp.f5.si': { handle: '@hamuzon', url: 'https://hamuzon-jp.f5.si' }
+    };
+
+    const current = footerMap[location.hostname] || {
+      handle: '@hamusata',
+      url: `${location.protocol}//${location.host}`
+    };
+
+    footerLink.textContent = current.handle;
+    footerLink.href = current.url;
+  }
 });
