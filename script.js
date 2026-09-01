@@ -265,24 +265,28 @@ document.addEventListener('DOMContentLoaded', () => {
   newTab();
   applyTheme();
 
-  // フッターの年度更新とドメイン別リンク切替
-  const yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  // フッターのコピーライトとドメイン別リンクを設定
+  (() => {
+    const baseYear = 2026;
+    const currentYear = new Date().getFullYear();
+    const hostname = location.hostname;
+    const footer = document.getElementById('footer-copy');
 
-  const footerLink = document.getElementById('footerLink');
-  if (footerLink) {
+    const copyrightYear = baseYear + (currentYear > baseYear ? `~${currentYear}` : '');
     const footerMap = {
+      'hamuzon-jp.f5.si': { handle: '@hamuzon', url: 'https://hamuzon-jp.f5.si' },
+      'hamuzon.web.fc2.com': { handle: '@hamuzon', url: 'https://hamuzon.web.fc2.com' },
       'hamuzon.github.io': { handle: '@hamuzon', url: 'https://hamuzon.github.io' },
-      'hamusata.f5.si': { handle: '@hamusata', url: 'https://hamusata.f5.si' },
-      'hamuzon-jp.f5.si': { handle: '@hamuzon', url: 'https://hamuzon-jp.f5.si' }
+      'hamusata.f5.si': { handle: '@hamusata', url: 'https://hamusata.f5.si' }
     };
+    const site = Object.entries(footerMap).find(([domain]) => hostname.includes(domain))?.[1];
+    const footerContent = site
+      ? `<a href="${site.url}" target="_blank" rel="noopener noreferrer">${site.handle}</a>`
+      : '';
+    const appName = 'ファイルエディター / File Editor';
 
-    const current = footerMap[location.hostname] || {
-      handle: '@hamusata',
-      url: `${location.protocol}//${location.host}`
-    };
-
-    footerLink.textContent = current.handle;
-    footerLink.href = current.url;
-  }
+    if (footer) {
+      footer.innerHTML = `&copy; ${copyrightYear} ${footerContent ? `${footerContent}<br>${appName}` : appName}`;
+    }
+  })();
 });
